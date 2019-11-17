@@ -61,7 +61,7 @@ export default class Data extends Component {
 
   }
 
-  Create(event, IdentifierStart,IdentifierEnd, type){
+  Create(IdentifierStart,IdentifierEnd, type){
     event.preventDefault();
     var Identifier = IdentifierStart+IdentifierEnd;
 
@@ -155,22 +155,22 @@ export default class Data extends Component {
     // --------
     // online start
     // --------
-    // this.setState({loading:"loading"});
-    //
-    // axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
-    // .then(response => {
-    //   var Data = response.data;
-    //   var Data = this.ReadHelper1(Data);
-    //   var loading = "loaded";
-    //   this.setState({
-    //     // Data: Data,
-    //     Data: Data,
-    //     loading:loading
-    //   });
-    // }).catch(error => {
-    //   console.log(error);
-    //   this.setState({loading:"failed"});
-    // });
+    this.setState({loading:"loading"});
+
+    axios.get('https://test-c6f20.firebaseio.com/Reports/Report_1.json')
+    .then(response => {
+      var Data = response.data;
+      var Data = this.ReadHelper1(Data);
+      var loading = "loaded";
+      this.setState({
+        // Data: Data,
+        Data: Data,
+        loading:loading
+      });
+    }).catch(error => {
+      console.log(error);
+      this.setState({loading:"failed"});
+    });
     // --------
     // online end
     // --------
@@ -178,36 +178,36 @@ export default class Data extends Component {
     // --------
     // offline start
     // --------
-    var Data = {
-      "content": {
-        "_data": {
-          "content": {
-            "code": {
-              "content": {
-                "w3css": {
-                  "content": "123",
-                  "type": "file"
-                },
-                "w3cssd": {
-                  "content": "123",
-                  "type": "file"
-                }
-              },
-              "type": "folder"
-            }
-          },
-          "type": "folder"
-        }
-      }
-    };
-    var Data = this.ReadHelper1(Data);
-    var loading = "failed";
-
-    this.setState({
-      // Data: Data,
-      Data: Data,
-      loading:loading
-    });
+    // var Data = {
+    //   "content": {
+    //     "_data": {
+    //       "content": {
+    //         "code": {
+    //           "content": {
+    //             "w3css": {
+    //               "content": "123",
+    //               "type": "file"
+    //             },
+    //             "w3cssd": {
+    //               "content": "123",
+    //               "type": "file"
+    //             }
+    //           },
+    //           "type": "folder"
+    //         }
+    //       },
+    //       "type": "folder"
+    //     }
+    //   }
+    // };
+    // var Data = this.ReadHelper1(Data);
+    // var loading = "failed";
+    //
+    // this.setState({
+    //   // Data: Data,
+    //   Data: Data,
+    //   loading:loading
+    // });
 
     // --------
     // offline end
@@ -261,7 +261,7 @@ export default class Data extends Component {
 
   }
 
-  Update(event, IdentifierStart,IdentifierEnd){
+  Update(IdentifierStart,IdentifierEnd){
     event.preventDefault();
     var Identifier = IdentifierStart+IdentifierEnd;
     // var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
@@ -355,7 +355,7 @@ export default class Data extends Component {
 
   }
 
-  Delete(event, Identifier){
+  Delete(Identifier){
     event.preventDefault();
 
     var UrlEnd = Identifier;
@@ -410,12 +410,12 @@ export default class Data extends Component {
                 identifier="Data"
                 Attr={this.state.Attr}
                 Data={this.state.Data.content}
-                Create={(event, IdentifierStart,IdentifierEnd, type) => this.Create(event, IdentifierStart,IdentifierEnd, type)}
+                Create={(IdentifierStart,IdentifierEnd, type) => this.Create(IdentifierStart,IdentifierEnd, type)}
                 CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => this.CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
                 UpdateHelperContents={(Identifier,value) => this.UpdateHelperContents(Identifier,value)}
                 UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => this.UpdateHelperName(IdentifierStart,IdentifierEnd,value)}
-                Delete={(event, Identifier) => this.Delete(event, Identifier)}
-                Update={(event, IdentifierStart,IdentifierEnd) => this.Update(event, IdentifierStart,IdentifierEnd)}
+                Delete={(Identifier) => this.Delete(Identifier)}
+                Update={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
                 />
             </form>
             Data
@@ -430,7 +430,7 @@ export default class Data extends Component {
 }
 
 // Recursive component
-const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHelperContents, UpdateHelperName,Delete, Update, event}) => {
+const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHelperContents, UpdateHelperName,Delete, Update}) => {
 
 
 
@@ -458,8 +458,8 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
 
 
 
-            <button onClick={(event, IdentifierStart,IdentifierEnd) => {Update(event, identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit" >✓</button>
-            <button onClick={(event, Identifier) => {Delete(event, identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" >×</button>
+            <button onClick={(IdentifierStart,IdentifierEnd) => {Update(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit" >✓</button>
+            <button onClick={(Identifier) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" >×</button>
 
 
 
@@ -471,12 +471,12 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
                   <span className="kv-di-bl" >
                     <span>📁</span>
                     <input onBlur={(Identifier,value,type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[6])}} className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
-                    <button onClick={(event, IdentifierStart, IdentifierEnd, type) => {Create(event, identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6])}} type="submit" className="kv-little-button" >+</button>
+                    <button onClick={(IdentifierStart, IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6])}} type="submit" className="kv-little-button" >+</button>
                   </span>
                   <span className="kv-mar-top-3 kv-di-bl">
                     <span>📃</span>
                     <input onBlur={(Identifier,value, type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[9])}} className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
-                    <button onClick={(event, IdentifierStart,IdentifierEnd, type) => {Create(event, identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9])}} type="submit" className="kv-little-button" >+</button>
+                    <button onClick={(IdentifierStart,IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9])}} type="submit" className="kv-little-button" >+</button>
                   </span>
                 </span>
               </label>
@@ -490,12 +490,12 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
               Data={Data[keyName].content}
-              Create={(event, IdentifierStart,IdentifierEnd, type) => {Create(event, IdentifierStart,IdentifierEnd, type)}}
+              Create={(IdentifierStart,IdentifierEnd, type) => {Create(IdentifierStart,IdentifierEnd, type)}}
               CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
               UpdateHelperContents={(Identifier,value) => {UpdateHelperContents(Identifier,value)}}
               UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => {UpdateHelperName(IdentifierStart,IdentifierEnd,value)}}
-              Delete={(event, Identifier) => {Delete(event, Identifier)}}
-              Update={(event, IdentifierStart,IdentifierEnd) => {Update(event, IdentifierStart,IdentifierEnd)}}
+              Delete={(Identifier) => {Delete(Identifier)}}
+              Update={(IdentifierStart,IdentifierEnd) => {Update(IdentifierStart,IdentifierEnd)}}
               />
 
             :
