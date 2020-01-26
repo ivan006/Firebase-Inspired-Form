@@ -30,7 +30,7 @@ export default class Data extends Component {
 
 
 
-  CreateHelperName(IdentifierStart,IdentifierEnd,value,type){
+  CreateHelperName(IdentifierStart,IdentifierEnd,value,type, event){
     var Identifier = IdentifierStart+IdentifierEnd;
 
     var Data = this.state.Data;
@@ -61,7 +61,7 @@ export default class Data extends Component {
 
   }
 
-  Create(IdentifierStart,IdentifierEnd, type){
+  Create(IdentifierStart,IdentifierEnd, type, event){
     event.preventDefault();
     var Identifier = IdentifierStart+IdentifierEnd;
 
@@ -219,7 +219,7 @@ export default class Data extends Component {
 
   }
 
-  UpdateHelperContents(Identifier,value){
+  UpdateHelperContents(Identifier,value, event){
 
     var Data = this.state.Data;
     eval(Identifier+"=value");
@@ -261,7 +261,7 @@ export default class Data extends Component {
 
   }
 
-  Update(IdentifierStart,IdentifierEnd){
+  Update(IdentifierStart,IdentifierEnd, event){
     event.preventDefault();
     var Identifier = IdentifierStart+IdentifierEnd;
     // var SendReadHelper2 = this.SendReadHelper2(IdentifierStart,IdentifierEnd);
@@ -355,7 +355,7 @@ export default class Data extends Component {
 
   }
 
-  Delete(Identifier){
+  Delete(Identifier, event){
     event.preventDefault();
 
     var UrlEnd = Identifier;
@@ -410,12 +410,12 @@ export default class Data extends Component {
                 identifier="Data"
                 Attr={this.state.Attr}
                 Data={this.state.Data.content}
-                Create={(IdentifierStart,IdentifierEnd, type) => this.Create(IdentifierStart,IdentifierEnd, type)}
-                CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => this.CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
-                UpdateHelperContents={(Identifier,value) => this.UpdateHelperContents(Identifier,value)}
+                Create={(IdentifierStart,IdentifierEnd, type, event) => this.Create(IdentifierStart,IdentifierEnd, type, event)}
+                CreateHelperName={(IdentifierStart,IdentifierEnd,value, type, event) => this.CreateHelperName(IdentifierStart,IdentifierEnd,value, type, event)}
+                UpdateHelperContents={(Identifier,value, event) => this.UpdateHelperContents(Identifier,value, event)}
                 UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => this.UpdateHelperName(IdentifierStart,IdentifierEnd,value)}
-                Delete={(Identifier) => this.Delete(Identifier)}
-                Update={(IdentifierStart,IdentifierEnd) => this.Update(IdentifierStart,IdentifierEnd)}
+                Delete={(Identifier, event) => this.Delete(Identifier, event)}
+                Update={(IdentifierStart,IdentifierEnd, event) => this.Update(IdentifierStart,IdentifierEnd, event)}
                 />
             </form>
             Data
@@ -451,15 +451,15 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
 
             <label >
               <input className="kv-tog-on-ib-switch kv-tog-off-ib-switch" type="checkbox" name="checkbox" defaultValue="value" ></input>
-              <input onBlur={(Identifier,value) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
+              <input onBlur={(event) => {UpdateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, event)}} className="kv-field-container kv-name kv-tog-on-ib" type="text"  defaultValue={keyName} ></input>
               <span className="kv-name-unedit kv-name kv-tog-off-ib ">{keyName}</span>
               <span className="kv-little-button ">^</span>
             </label>
 
 
 
-            <button onClick={(IdentifierStart,IdentifierEnd) => {Update(identifier+"["+"'content'"+"]","['"+keyName+"']")}} className="kv-little-button" type="submit" >✓</button>
-            <button onClick={(Identifier) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']")}} className="kv-little-button" type="submit" >×</button>
+            <button onClick={(event) => {Update(identifier+"["+"'content'"+"]","['"+keyName+"']", event)}} className="kv-little-button" type="submit" >✓</button>
+            <button onClick={(event) => {Delete(identifier+"["+"'content'"+"]['"+keyName+"']", event)}} className="kv-little-button" type="submit" >×</button>
 
 
 
@@ -470,13 +470,13 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
                 <span className="kv-popover kv-tog-on-bl kv-item-container  kv-di-in" >
                   <span className="kv-di-bl" >
                     <span>📁</span>
-                    <input onBlur={(Identifier,value,type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[6])}} className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
-                    <button onClick={(IdentifierStart, IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6])}} type="submit" className="kv-little-button" >+</button>
+                    <input onBlur={(event) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[6], event)}} className="kv-field-container kv-name kv-di-in "  type="text"     ></input>
+                    <button onClick={(event) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[6], event)}} type="submit" className="kv-little-button" >+</button>
                   </span>
                   <span className="kv-mar-top-3 kv-di-bl">
                     <span>📃</span>
-                    <input onBlur={(Identifier,value, type) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[9])}} className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
-                    <button onClick={(IdentifierStart,IdentifierEnd, type) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9])}} type="submit" className="kv-little-button" >+</button>
+                    <input onBlur={(event) => {CreateHelperName(identifier+"["+"'content'"+"]","['"+keyName+"']",event.target.value, Attr[9], event)}} className="kv-field-container kv-name kv-di-in"  type="text"  ></input>
+                    <button onClick={(event) => {Create(identifier+"["+"'content'"+"]","['"+keyName+"']", Attr[9], event)}} type="submit" className="kv-little-button" >+</button>
                   </span>
                 </span>
               </label>
@@ -490,19 +490,19 @@ const DataHelper = ({ identifier,Attr, Data, Create, CreateHelperName, UpdateHel
               identifier= {identifier+"["+"'content'"+"]['"+keyName+"']"}
               Attr= {Attr}
               Data={Data[keyName].content}
-              Create={(IdentifierStart,IdentifierEnd, type) => {Create(IdentifierStart,IdentifierEnd, type)}}
-              CreateHelperName={(IdentifierStart,IdentifierEnd,value, type) => CreateHelperName(IdentifierStart,IdentifierEnd,value, type)}
-              UpdateHelperContents={(Identifier,value) => {UpdateHelperContents(Identifier,value)}}
+              Create={(IdentifierStart,IdentifierEnd, type, event) => {Create(IdentifierStart,IdentifierEnd, type, event)}}
+              CreateHelperName={(IdentifierStart,IdentifierEnd,value, type, event) => CreateHelperName(IdentifierStart,IdentifierEnd,value, type, event)}
+              UpdateHelperContents={(Identifier,value, event) => {UpdateHelperContents(Identifier,value, event)}}
               UpdateHelperName={(IdentifierStart,IdentifierEnd,value) => {UpdateHelperName(IdentifierStart,IdentifierEnd,value)}}
-              Delete={(Identifier) => {Delete(Identifier)}}
-              Update={(IdentifierStart,IdentifierEnd) => {Update(IdentifierStart,IdentifierEnd)}}
+              Delete={(Identifier, event) => {Delete(Identifier, event)}}
+              Update={(IdentifierStart,IdentifierEnd, event) => {Update(IdentifierStart,IdentifierEnd, event)}}
               />
 
             :
             <ul className="kv-list-parent">
               <li>
                 <div className="kv-item-container ">
-                  <textarea onChange={(Identifier,value) => {UpdateHelperContents(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
+                  <textarea onChange={(event) => {UpdateHelperContents(identifier+"["+"'content'"+"]['"+keyName+"']['"+Attr[2]+"']",event.target.value, event)}} className="kv-field-container kv-content-container kv-di-in"  rows="8" defaultValue={Data[keyName].content}></textarea>
                 </div>
               </li>
             </ul>

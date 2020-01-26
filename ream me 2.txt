@@ -1,0 +1,16 @@
+AJAX Nested Feilds
+A convention tutorial on ajax based nested fields
+
+
+
+onChange=\{\((.*?)\) => \{(.*?)\((.*?)\)\}\}
+
+onChange={(event) => {$2($3)}
+
+
+UpdateHelperContents=\{\((.*?)\) =>
+UpdateHelperContents={($1, event) =>
+
+
+UpdateHelperContents\((.*?\)
+UpdateHelperContents($1, event)
